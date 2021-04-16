@@ -3,14 +3,20 @@ package com.example.exam2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.dynamicanimation.animation.DynamicAnimation;
+import androidx.dynamicanimation.animation.SpringAnimation;
+import androidx.dynamicanimation.animation.SpringForce;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -20,6 +26,9 @@ import java.io.InputStreamReader;
 
 import static android.Manifest.permission.RECORD_AUDIO;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+
+import static androidx.dynamicanimation.animation.SpringForce.DAMPING_RATIO_MEDIUM_BOUNCY;
+import static androidx.dynamicanimation.animation.SpringForce.STIFFNESS_LOW;
 
 // The ChopTrees activity should have the following...
 // When the tree is clicked:
@@ -40,11 +49,16 @@ public class ChopTrees extends AppCompatActivity {
     private final static String privateDirectory = "private";
     private final static String fileName = "chopnum.txt";
 
+    private SpringAnimation thingSpring;
+    DisplayMetrics displayMetrics = new DisplayMetrics();
+
     private int chopNum = 0; // Number of total trees that have been chopped since last reset
 
-    private int treeOneChops = 3;   // How many chops to cut down this tree
-    private ImageView treeOne;
-
+    private int treeOneChops = 4;   // How many chops to cut down this tree
+    private int treeTwoChops = 3;
+    private ImageView treeOne, treeTwo;
+    private ImageView Axe;
+    Animation oneFallOver, twoFallOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +67,55 @@ public class ChopTrees extends AppCompatActivity {
 
         // set up the activitiy here!
         treeOne = findViewById(R.id.imageViewTreeOne);
+        treeTwo = findViewById(R.id.imageViewTreeTwo);
+        Axe = findViewById(R.id.Axe);
+
+        oneFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
+        twoFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
+
+        oneFallOver.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                treeOne.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        twoFallOver.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                treeTwo.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
 
     }
 
     public void treeOneClicked (View view) {
-
 
         switch (treeOneChops) {
             case 1:
                 // fall down
                 chopSound();
                 treeFallSound();
+                treeOne.startAnimation(oneFallOver);
                 treeHasFallen();
                 treeOneChops --;
                 break;
@@ -73,15 +125,35 @@ public class ChopTrees extends AppCompatActivity {
             default:
                 // Chopping animation and sound
                 chopSound();
-
+                getHighBounceX(Axe, -1000F, 50F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeOneChops --;
-
         }
-
-
 
     }
 
+
+    public void treeTwoClicked (View view) {
+
+        switch (treeTwoChops) {
+            case 1:
+                // fall down
+                chopSound();
+                treeFallSound();
+                treeTwo.startAnimation(twoFallOver);
+                treeHasFallen();
+                treeTwoChops --;
+                break;
+            case 0:
+                // Do nothing, it has not been reset
+                break;
+            default:
+                // Chopping animation and sound
+                chopSound();
+                getHighBounceX(Axe, -10000F, 50F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                treeTwoChops --;
+        }
+
+    }
 
 
 
@@ -125,6 +197,11 @@ public class ChopTrees extends AppCompatActivity {
         });
 
     }
+
+
+
+
+
 
 
     // need any helper functions? put them here
@@ -187,5 +264,36 @@ public class ChopTrees extends AppCompatActivity {
         return retval;
     }
 
+
+
+
+
+
+    private SpringForce getSpringForce(float dampingRotation, float stiffness, float finalPosition) {
+        SpringForce force = new SpringForce();
+        force.setDampingRatio(dampingRotation).setStiffness(stiffness);
+        force.setFinalPosition(finalPosition);
+        return force;
+    }
+
+    private float getVelocity(float velocityDp) {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, velocityDp, getResources().getDisplayMetrics());
+    }
+
+    private SpringAnimation getHighBounceX(View view, float velocityDP, float FinalPosition, float DAMPING, float STIFFNESS) {
+        final SpringAnimation anim = new SpringAnimation(view, DynamicAnimation.TRANSLATION_X);
+        anim.setStartVelocity(velocityDP);
+        anim.animateToFinalPosition(FinalPosition);
+        anim.setSpring(getSpringForce(DAMPING, STIFFNESS, FinalPosition));
+        return anim;
+    }
+
+    private SpringAnimation getHighBounceY(View view, float velocityDP, float FinalPosition, float DAMPING, float STIFFNESS) {
+        final SpringAnimation anim = new SpringAnimation(view, DynamicAnimation.TRANSLATION_Y);
+        anim.setStartVelocity(velocityDP);
+        anim.animateToFinalPosition(FinalPosition);
+        anim.setSpring(getSpringForce(DAMPING, STIFFNESS, FinalPosition));
+        return anim;
+    }
 
 }

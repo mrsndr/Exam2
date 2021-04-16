@@ -8,6 +8,15 @@
     tools:context=".ChopTrees" >
 
     <ImageView
+        android:id="@+id/imageViewTreeTwo"
+        android:layout_width="357dp"
+        android:layout_height="612dp"
+        android:onClick="treeTwoClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/treehires" />
+
+    <ImageView
         android:id="@+id/imageViewTreeOne"
         android:layout_width="357dp"
         android:layout_height="612dp"
@@ -15,4 +24,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/treehires" />
+
+    <ImageView
+        android:id="@+id/Axe"
+        android:layout_width="229dp"
+        android:layout_height="439dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/axehires" />
 </androidx.constraintlayout.widget.ConstraintLayout>
