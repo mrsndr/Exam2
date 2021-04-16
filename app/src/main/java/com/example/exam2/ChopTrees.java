@@ -3,6 +3,8 @@ package com.example.exam2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 // The ChopTrees activity should have the following...
 // When the tree is clicked:
@@ -24,6 +26,11 @@ public class ChopTrees extends AppCompatActivity {
         // set up the activitiy here!
 
     }
+
+
+
+
+
 
     // need any helper functions? put them here
 }

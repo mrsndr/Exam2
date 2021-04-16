@@ -6,13 +6,89 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
 
-    <TextView
+    <ImageView
+        android:id="@+id/splashTree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/splash_screen_placeholder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/treehires" />
+
+    <ImageView
+        android:id="@+id/splashLeftAxe"
+        android:layout_width="118dp"
+        android:layout_height="387dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/axehires" />
+
+    <ImageView
+        android:id="@+id/splashRightAxe"
+        android:layout_width="118dp"
+        android:layout_height="387dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:rotationY="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/axehires" />
+
+    <TextView
+        android:id="@+id/splashTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/app_name"
+        android:textAlignment="center"
+        android:textSize="60sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/splashFallenTreeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:text="@string/splashCounterTitle"
+        android:textAlignment="textEnd"
+        android:textColor="@color/teal_200"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/splashLeftAxe"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashTitle" />
+
+    <TextView
+        android:id="@+id/splashScreenCounterText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="77077"
+        android:textAlignment="center"
+        android:textColor="@color/teal_200"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="@+id/splashFallenTreeTitle"
+        app:layout_constraintStart_toEndOf="@+id/splashFallenTreeTitle"
+        app:layout_constraintTop_toTopOf="@+id/splashFallenTreeTitle" />
+
+    <Button
+        android:id="@+id/splashResetButton"
+        android:layout_width="160dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:onClick="resetCounterButton_Pressed"
+        android:text="@string/splashCounterReset"
+        android:textAlignment="center"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/splashFallenTreeTitle" />
 </androidx.constraintlayout.widget.ConstraintLayout>
