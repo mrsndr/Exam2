@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -34,6 +35,7 @@ import static android.Manifest.permission.RECORD_AUDIO;
 public class SplashScreen extends AppCompatActivity {
     private int splashTime = 5000;
     public static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
+
 
     private int chopNum = 0;
     private final static String privateDirectory = "private";
@@ -67,6 +69,9 @@ public class SplashScreen extends AppCompatActivity {
 
 
     }
+
+
+
 
 
     // Reset button pressed
