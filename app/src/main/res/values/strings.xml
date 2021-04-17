@@ -2,6 +2,7 @@
     <string name="app_name">Tree Chopper</string>
     <string name="splashCounterTitle">Trees Fallen:</string>
     <string name="splashCounterReset">RESET</string>
+    <string name="ChopTreesGameOver">Congratulations on deforestation! Come back later and we will plant more trees for you to murder!</string>
     <string name="splash_screen_placeholder">This is the splash screen</string>
     <string name="ChopTrees_screen_placeholder">This is the ChopTrees screen</string>
 

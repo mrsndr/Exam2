@@ -7,6 +7,52 @@
     android:layout_height="match_parent"
     tools:context=".ChopTrees" >
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:singleLine="false"
+        android:text="@string/ChopTreesGameOver"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
+
+    <ImageView
+        android:id="@+id/imageViewStumpTwo"
+        android:layout_width="357dp"
+        android:layout_height="612dp"
+        android:onClick="treeTwoClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/treestumphires" />
+
+    <ImageView
+        android:id="@+id/imageViewStumpThree"
+        android:layout_width="357dp"
+        android:layout_height="612dp"
+        android:layout_marginTop="84dp"
+        android:onClick="treeThreeClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/treestumphires" />
+
+    <ImageView
+        android:id="@+id/imageViewStumpOne"
+        android:layout_width="357dp"
+        android:layout_height="612dp"
+        android:onClick="treeOneClicked"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/treestumphires" />
+
     <ImageView
         android:id="@+id/imageViewTreeTwo"
         android:layout_width="357dp"
@@ -30,7 +76,7 @@
         android:layout_width="357dp"
         android:layout_height="612dp"
         android:layout_marginTop="84dp"
-        android:onClick="treeOneClicked"
+        android:onClick="treeThreeClicked"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -43,4 +89,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/axehires" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

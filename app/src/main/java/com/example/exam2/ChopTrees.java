@@ -61,7 +61,9 @@ public class ChopTrees extends AppCompatActivity {
     private ImageView Axe;
     Animation oneFallOver, twoFallOver, threeFallOver, axeFadeOut;
 
-    private int treeTracker1, treeTracker2, treeTracker3 = 1;
+    private int treeTracker1 = 1;
+    private int treeTracker2 = 1;
+    private int treeTracker3 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +89,9 @@ public class ChopTrees extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation)
             {
-                //treeOne.setImageResource(getResources(R.drawable.));
+                treeOne.setVisibility(View.GONE);
+                //treeOne.setImageResource(R.drawable.stumphires);
+                //treeOne.setVisibility(View.VISIBLE);
             }
 
             @Override
@@ -103,7 +107,7 @@ public class ChopTrees extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation)
             {
-                treeTwo.setVisibility(View.INVISIBLE);
+                treeTwo.setVisibility(View.GONE);
             }
 
             @Override
@@ -119,7 +123,7 @@ public class ChopTrees extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation)
             {
-                treeThree.setVisibility(View.INVISIBLE);
+                treeThree.setVisibility(View.GONE);
             }
 
             @Override
@@ -151,11 +155,12 @@ public class ChopTrees extends AppCompatActivity {
         switch (treeOneChops) {
             case 1:
                 // fall down
-                chopSound();
-                treeFallSound();
-                treeOne.startAnimation(oneFallOver);
-                treeHasFallen();
-                treeOneChops --;
+                treeTracker1 = 0;   // Tracks that this tree is gone
+                chopSound();    // plays the chop sound
+                treeFallSound();    // Plays the falling sound
+                treeOne.startAnimation(oneFallOver);    // Animates the fall
+                treeHasFallen();    // Adds to the tree counter
+                treeOneChops --;    // Removes the chance of extra clicks
                 break;
             case 0:
                 // Do nothing, it has not been reset yet
@@ -175,6 +180,7 @@ public class ChopTrees extends AppCompatActivity {
         switch (treeTwoChops) {
             case 1:
                 // fall down
+                treeTracker2 = 0;
                 chopSound();
                 treeFallSound();
                 treeTwo.startAnimation(twoFallOver);
@@ -198,6 +204,7 @@ public class ChopTrees extends AppCompatActivity {
         switch (treeThreeChops) {
             case 1:
                 // fall down
+                treeTracker3 = 0;
                 chopSound();
                 treeFallSound();
                 treeThree.startAnimation(threeFallOver);
@@ -227,7 +234,9 @@ public class ChopTrees extends AppCompatActivity {
 
         //Toast.makeText(getApplicationContext(), "The counter was reset!" ,Toast.LENGTH_SHORT).show();
 
-        if (treeTracker1 + treeTracker2 + treeTracker3 == 0) {
+        int treeCount = treeTracker1 + treeTracker2 + treeTracker3;
+
+        if (treeCount == 0) {
             // start timer to close app
 
             // Take the axe away, they clearly should not be allowed to have it! Three trees in a row! Who do they think they are?
