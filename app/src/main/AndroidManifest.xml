@@ -10,9 +10,9 @@
 
     <application
         android:allowBackup="false"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/axelowres"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/axelowres"
         android:supportsRtl="true"
         android:theme="@style/Theme.Exam2">
         <activity android:name=".ChopTrees"></activity>

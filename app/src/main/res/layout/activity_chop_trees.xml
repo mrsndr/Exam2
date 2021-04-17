@@ -26,6 +26,17 @@
         app:srcCompat="@drawable/treehires" />
 
     <ImageView
+        android:id="@+id/imageViewTreeThree"
+        android:layout_width="357dp"
+        android:layout_height="612dp"
+        android:layout_marginTop="84dp"
+        android:onClick="treeOneClicked"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/treehires" />
+
+    <ImageView
         android:id="@+id/Axe"
         android:layout_width="229dp"
         android:layout_height="439dp"

@@ -56,9 +56,12 @@ public class ChopTrees extends AppCompatActivity {
 
     private int treeOneChops = 4;   // How many chops to cut down this tree
     private int treeTwoChops = 3;
-    private ImageView treeOne, treeTwo;
+    private int treeThreeChops = 5;
+    private ImageView treeOne, treeTwo, treeThree;
     private ImageView Axe;
-    Animation oneFallOver, twoFallOver;
+    Animation oneFallOver, twoFallOver, threeFallOver, axeFadeOut;
+
+    private int treeTracker1, treeTracker2, treeTracker3 = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +71,13 @@ public class ChopTrees extends AppCompatActivity {
         // set up the activitiy here!
         treeOne = findViewById(R.id.imageViewTreeOne);
         treeTwo = findViewById(R.id.imageViewTreeTwo);
+        treeThree = findViewById(R.id.imageViewTreeThree);
         Axe = findViewById(R.id.Axe);
 
         oneFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
         twoFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
+        threeFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall_left);
+        axeFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
 
         oneFallOver.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -81,7 +87,7 @@ public class ChopTrees extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation)
             {
-                treeOne.setVisibility(View.INVISIBLE);
+                //treeOne.setImageResource(getResources(R.drawable.));
             }
 
             @Override
@@ -98,6 +104,38 @@ public class ChopTrees extends AppCompatActivity {
             public void onAnimationEnd(Animation animation)
             {
                 treeTwo.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        threeFallOver.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                treeThree.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        axeFadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                Axe.setVisibility(View.INVISIBLE);
             }
 
             @Override
@@ -125,7 +163,7 @@ public class ChopTrees extends AppCompatActivity {
             default:
                 // Chopping animation and sound
                 chopSound();
-                getHighBounceX(Axe, -1000F, 50F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                getHighBounceX(Axe, -10000F, 1F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeOneChops --;
         }
 
@@ -149,13 +187,34 @@ public class ChopTrees extends AppCompatActivity {
             default:
                 // Chopping animation and sound
                 chopSound();
-                getHighBounceX(Axe, -10000F, 50F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                getHighBounceX(Axe, -10000F, 1F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeTwoChops --;
         }
 
     }
 
+    public void treeThreeClicked (View view) {
 
+        switch (treeThreeChops) {
+            case 1:
+                // fall down
+                chopSound();
+                treeFallSound();
+                treeThree.startAnimation(threeFallOver);
+                treeHasFallen();
+                treeThreeChops --;
+                break;
+            case 0:
+                // Do nothing, it has not been reset
+                break;
+            default:
+                // Chopping animation and sound
+                chopSound();
+                getHighBounceX(Axe, -10000F, -6F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                treeThreeChops --;
+        }
+
+    }
 
 
     // Tree fell
@@ -167,6 +226,14 @@ public class ChopTrees extends AppCompatActivity {
         writeToInternal(getApplicationContext(),chopNum + 1);
 
         //Toast.makeText(getApplicationContext(), "The counter was reset!" ,Toast.LENGTH_SHORT).show();
+
+        if (treeTracker1 + treeTracker2 + treeTracker3 == 0) {
+            // start timer to close app
+
+            // Take the axe away, they clearly should not be allowed to have it! Three trees in a row! Who do they think they are?
+            Axe.startAnimation(axeFadeOut);
+        }
+
     }
 
     public void chopSound() {
