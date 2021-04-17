@@ -8,15 +8,19 @@ import androidx.dynamicanimation.animation.SpringAnimation;
 import androidx.dynamicanimation.animation.SpringForce;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -59,7 +63,8 @@ public class ChopTrees extends AppCompatActivity {
     private int treeThreeChops = 5;
     private ImageView treeOne, treeTwo, treeThree;
     private ImageView Axe;
-    Animation oneFallOver, twoFallOver, threeFallOver, axeFadeOut;
+    private TextView gameOverText;
+    Animation oneFallOver, twoFallOver, threeFallOver, axeFadeOut, endGameCard;
 
     private int treeTracker1 = 1;
     private int treeTracker2 = 1;
@@ -75,11 +80,13 @@ public class ChopTrees extends AppCompatActivity {
         treeTwo = findViewById(R.id.imageViewTreeTwo);
         treeThree = findViewById(R.id.imageViewTreeThree);
         Axe = findViewById(R.id.Axe);
+        gameOverText = findViewById(R.id.textViewEndGame);
 
         oneFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
         twoFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall);
         threeFallOver = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.treefall_left);
         axeFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+        endGameCard = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
 
         oneFallOver.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -140,6 +147,27 @@ public class ChopTrees extends AppCompatActivity {
             public void onAnimationEnd(Animation animation)
             {
                 Axe.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+        });
+
+        endGameCard.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                gameOverText.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                // start timer to close app
+                new Handler(Looper.getMainLooper()).postDelayed(
+                        () -> {
+                            finishAffinity();
+                        }, 6000);
             }
 
             @Override
@@ -237,7 +265,8 @@ public class ChopTrees extends AppCompatActivity {
         int treeCount = treeTracker1 + treeTracker2 + treeTracker3;
 
         if (treeCount == 0) {
-            // start timer to close app
+            // fade the game over card and the timer to close the app will start when it finishes the animation
+            gameOverText.startAnimation(endGameCard);
 
             // Take the axe away, they clearly should not be allowed to have it! Three trees in a row! Who do they think they are?
             Axe.startAnimation(axeFadeOut);
@@ -253,6 +282,14 @@ public class ChopTrees extends AppCompatActivity {
         chopPlayer.setVolume(0.5f, 0.5f);
 
         chopPlayer.start();
+
+        chopPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            public void onCompletion(MediaPlayer mPlayer) {
+                mPlayer.release();
+                // Reset the tree
+
+            }
+        });
     }
 
     public void treeFallSound() {
