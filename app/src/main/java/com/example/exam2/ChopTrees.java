@@ -185,6 +185,7 @@ public class ChopTrees extends AppCompatActivity {
                 // fall down
                 treeTracker1 = 0;   // Tracks that this tree is gone
                 chopSound();    // plays the chop sound
+                getHighBounceX(Axe, -10000F, -300F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeFallSound();    // Plays the falling sound
                 treeOne.startAnimation(oneFallOver);    // Animates the fall
                 treeHasFallen();    // Adds to the tree counter
@@ -196,7 +197,7 @@ public class ChopTrees extends AppCompatActivity {
             default:
                 // Chopping animation and sound
                 chopSound();
-                getHighBounceX(Axe, -10000F, 1F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                getHighBounceX(Axe, -10000F, -300F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeOneChops --;
         }
 
@@ -210,6 +211,7 @@ public class ChopTrees extends AppCompatActivity {
                 // fall down
                 treeTracker2 = 0;
                 chopSound();
+                getHighBounceX(Axe, -10000F, 1F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeFallSound();
                 treeTwo.startAnimation(twoFallOver);
                 treeHasFallen();
@@ -234,6 +236,7 @@ public class ChopTrees extends AppCompatActivity {
                 // fall down
                 treeTracker3 = 0;
                 chopSound();
+                getHighBounceX(Axe, -10000F, -150F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeFallSound();
                 treeThree.startAnimation(threeFallOver);
                 treeHasFallen();
@@ -245,7 +248,7 @@ public class ChopTrees extends AppCompatActivity {
             default:
                 // Chopping animation and sound
                 chopSound();
-                getHighBounceX(Axe, -10000F, -6F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
+                getHighBounceX(Axe, -10000F, -150F, DAMPING_RATIO_MEDIUM_BOUNCY, STIFFNESS_LOW).start();
                 treeThreeChops --;
         }
 
